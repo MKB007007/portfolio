@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kewin Benet M | Portfolio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+  
+  /* Reset & Base */
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { 
+    background: #0a0a0a; 
+    color:#f0f0f0; line-height:1.6; font-family: 'Inter', sans-serif; 
+    overflow-x: hidden; position: relative;
+  }
+
+  /* 3D Floating Particles Background */
+  .stars {
+    position: fixed; top:0; left:0; width:100%; height:100%; z-index: -2;
+  }
+  .star { 
+    position: absolute; width: 2px; height: 2px; background: #ffc107; 
+    border-radius: 50%; animation: twinkle 3s infinite;
+  }
+  @keyframes twinkle { 0%,100%{opacity:0.3; transform:scale(1);} 50%{opacity:1; transform:scale(1.5);} }
+
+  /* Tech Grid Background */
+  .grid {
+    position: fixed; top:0; left:0; width:100%; height:100%; z-index: -1;
+    background-image: 
+      linear-gradient(rgba(255,193,7,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,193,7,0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: gridMove 20s linear infinite;
+  }
+  @keyframes gridMove { 0%{ background-position: 0 0; } 100%{ background-position: 50px 50px; } }
+
+  /* Navigation */
+  nav {
+    display:flex; justify-content:space-between; align-items:center;
+    padding:20px 60px; background: rgba(0,0,0,0.95); backdrop-filter: blur(25px);
+    position:sticky; top:0; z-index:100; border-bottom: 2px solid transparent;
+    background: linear-gradient(90deg, rgba(255,193,7,0.1), rgba(255,107,53,0.1));
+  }
+  nav .logo { 
+    font-weight:800; font-size:1.6rem; 
+    background: linear-gradient(45deg, #ffc107, #ff6b35, #4ecdc4); 
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+  }
+  nav .menu { display:flex; gap:35px; }
+  nav .menu a { 
+    color:#fff; text-decoration:none; font-weight:600; position:relative; 
+    transition:0.3s; padding: 8px 0;
+  }
+  nav .menu a::before,
+  nav .menu a::after {
+    content:''; position:absolute; bottom:0; width:0; height:3px; 
+    background: linear-gradient(90deg, #ffc107, #ff6b35); transition:0.4s;
+  }
+  nav .menu a::before { left:50%; }
+  nav .menu a::after { right:50%; }
+  nav .menu a:hover::before { left:0; }
+  nav .menu a:hover::after { right:0; }
+  nav .menu a:hover { color:#ffc107; }
+  
+  nav .cta { 
+    background: linear-gradient(145deg, #ffc107, #ff6b35); 
+    color:#000; padding:14px 28px; border-radius:50px; font-weight:800; 
+    text-decoration:none; position:relative; overflow:hidden;
+    box-shadow: 0 8px 30px rgba(255,193,7,0.4);
+  }
+  nav .cta::before {
+    content:''; position:absolute; top:0; left:-100%; width:100%; height:100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: left 0.5s;
+  }
+  nav .cta:hover::before { left:100%; }
+  nav .cta:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(255,193,7,0.6); }
+
+  /* Hero Section - Next Level */
+  .hero {
+    position:relative; padding:240px 30px 160px; text-align:center; min-height: 100vh; 
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  
+  /* 3D Profile Card */
+  .profile-container {
+    perspective: 1000px; margin-bottom: 40px;
+  }
+  .profile-card {
+    width:180px; height:180px; margin: 0 auto; position: relative;
+    transform-style: preserve-3d; transition: transform 0.6s;
+  }
+  .profile-card:hover { transform: rotateY(10deg) rotateX(5deg); }
+  .hero .profile-pic {
+    width:100%; height:100%; border-radius:50%; object-fit:cover; position: relative;
+    border: 6px solid transparent; 
+    background: linear-gradient(45deg, #ffc107, #ff6b35, #4ecdc4, #45b7d1) border-box;
+    box-shadow: 
+      0 0 50px rgba(255,193,7,0.5),
+      inset 0 0 50px rgba(255,255,255,0.1);
+    animation: float3d 6s ease-in-out infinite;
+  }
+  @keyframes float3d {
+    0%,100%{ transform: translateY(0px) rotateZ(0deg); }
+    33%{ transform: translateY(-15px) rotateZ(2deg); }
+    66%{ transform: translateY(-5px) rotateZ(-2deg); }
+  }
+
+  /* PERFECTLY CENTERED & ALIGNED TYPING EFFECT */
+  .typing-container {
+    display: flex; 
+    justify-content: center; 
+    align-items: baseline; 
+    margin-bottom:20px; 
+    position: relative;
+    gap: 0;
+  }
+  
+  .typing-name {
+    font-size:4.5rem; 
+    font-weight:800; 
+    line-height: 1.1;
+    background: linear-gradient(45deg, #fff, #ffc107, #ff6b35); 
+    background-size: 200% 200%;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    margin: 0;
+    animation: 
+      neonGlow 2s ease-in-out infinite alternate,
+      gradientShift 3s ease infinite;
+  }
+  
+  /* PERFECTLY CENTERED & ALIGNED CURSOR */
+  .typing-cursor {
+    display: inline-block; 
+    width: 6px; 
+    height: 82px; /* Perfect match for 4.5rem + line-height */
+    background: linear-gradient(180deg, #ffc107, #ff6b35);
+    border-radius: 3px;
+    margin: 0 0 0 2px;
+    animation: blink 0.75s infinite, cursorFloat 2s ease-in-out infinite;
+    flex-shrink: 0;
+    align-self: flex-end;
+  }
+  
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+  
+  @keyframes cursorFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-2px); }
+  }
+  
+  @keyframes neonGlow {
+    from { filter: drop-shadow(0 0 10px #ffc107); }
+    to { filter: drop-shadow(0 0 30px #ffc107) drop-shadow(0 0 40px #ff6b35); }
+  }
+  
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  .hero p { font-size:1.4rem; color:#ccc; margin-bottom:40px; font-weight:300; 
+            text-shadow: 0 0 20px rgba(255,193,7,0.3); }
+  
+  .hero .hero-btn { 
+    position: relative; overflow: hidden;
+    background: linear-gradient(145deg, #ffc107, #ff6b35); 
+    color:#000; padding:18px 45px; border-radius:60px; font-weight:800; 
+    font-size:1.2rem; text-decoration:none; display:inline-block;
+    box-shadow: 0 10px 40px rgba(255,193,7,0.5);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .hero .hero-btn::before {
+    content:''; position:absolute; top:50%; left:50%; width:0; height:0;
+    background: rgba(255,255,255,0.5); border-radius:50%;
+    transform: translate(-50%, -50%); transition: all 0.6s;
+  }
+  .hero .hero-btn:active::before {
+    width:300px; height:300px;
+  }
+  .hero .hero-btn:hover { 
+    transform: translateY(-5px) scale(1.05); 
+    box-shadow: 0 20px 60px rgba(255,193,7,0.7);
+  }
+
+  /* Epic Background Elements */
+  .hero::before {
+    content:""; position:absolute; top:-150px; right:-150px; width:500px; height:500px;
+    background: conic-gradient(from 0deg at 30% 30%, #ffc107, #ff6b35, #4ecdc4, #45b7d1, transparent 70%);
+    border-radius:50%; opacity:0.12; animation: rotate 20s linear infinite, pulseOrb 4s infinite;
+    filter: blur(20px);
+  }
+  @keyframes rotate { 0%{ transform: rotate(0deg); } 100%{ transform: rotate(360deg); } }
+  @keyframes pulseOrb { 0%,100%{ transform: scale(1); } 50%{ transform: scale(1.1); } }
+
+  /* Ultimate Sections */
+  section { 
+    max-width:1100px; margin:100px auto; padding:60px 40px; 
+    background: rgba(15,15,15,0.95); backdrop-filter: blur(30px);
+    border-radius:30px; border: 2px solid rgba(255,193,7,0.15);
+    position:relative; overflow:hidden; box-shadow: 0 30px 100px rgba(0,0,0,0.6);
+  }
+  section::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:6px; 
+    background: linear-gradient(90deg, #ffc107, #ff6b35, #4ecdc4, #45b7d1);
+    box-shadow: 0 0 20px rgba(255,193,7,0.5);
+  }
+  section h2 { 
+    color:transparent; font-size:2.5rem; margin-bottom:40px; font-weight:800; 
+    background: linear-gradient(45deg, #ffc107, #ff6b35, #fff); 
+    -webkit-background-clip: text; background-clip: text;
+    position:relative; text-shadow: 0 0 30px rgba(255,193,7,0.5);
+  }
+  
+  /* Glass Cards */
+  .project-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 30px;
+  }
+  .project-card {
+    background: rgba(255,255,255,0.06); backdrop-filter: blur(20px);
+    border-radius: 25px; padding: 40px; border: 1px solid rgba(255,193,7,0.2);
+    position: relative; overflow: hidden; transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+  }
+  .project-card::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: conic-gradient(transparent, rgba(255,193,7,0.1), transparent 30%);
+    transition: all 0.8s; transform: rotate(0deg);
+  }
+  .project-card:hover::before { transform: rotate(90deg); }
+  .project-card:hover {
+    transform: translateY(-20px) scale(1.02); 
+    border-color: #ffc107; box-shadow: 0 40px 120px rgba(255,193,7,0.3);
+    background: rgba(255,255,255,0.1);
+  }
+  .project-card h3 { 
+    color:#ffc107; margin-bottom: 20px; font-size: 1.6rem; font-weight:700;
+    text-shadow: 0 0 20px rgba(255,193,7,0.5);
+  }
+  .project-card .github-btn {
+    display: inline-flex; align-items: center; gap: 12px; 
+    background: linear-gradient(145deg, rgba(255,255,255,0.15), rgba(255,193,7,0.2));
+    color: #fff; padding: 14px 25px; border-radius: 35px; text-decoration: none;
+    margin-top: 20px; font-weight: 700; backdrop-filter: blur(10px);
+    transition: all 0.4s; border: 1px solid rgba(255,193,7,0.3);
+  }
+  .project-card .github-btn:hover { 
+    background: linear-gradient(145deg, #ffc107, #ff6b35); color:#000; 
+    transform: scale(1.05); box-shadow: 0 10px 30px rgba(255,193,7,0.4);
+  }
+
+  ul { list-style:none; padding-left:0; }
+  li { 
+    margin-bottom:20px; padding:20px; background:rgba(255,255,255,0.08); 
+    border-radius:18px; border-left:5px solid transparent;
+    background: linear-gradient(90deg, rgba(255,193,7,0.1), rgba(255,107,53,0.1));
+    transition: all 0.4s; position: relative; overflow: hidden;
+  }
+  li::before {
+    content:''; position:absolute; top:0; left:0; width:0; height:100%;
+    background: linear-gradient(90deg, transparent, rgba(255,193,7,0.3)); 
+    transition: width 0.6s;
+  }
+  li:hover::before { width:100%; }
+  li:hover { transform: translateX(15px) scale(1.02); box-shadow: 0 15px 50px rgba(0,0,0,0.5); }
+  
+  footer { 
+    text-align:center; color:#888; margin:100px 0 50px; padding:30px; 
+    background:rgba(0,0,0,0.7); border-radius:25px; backdrop-filter: blur(20px);
+    border:1px solid rgba(255,193,7,0.1);
+  }
+
+  /* Responsive */
+  @media(max-width:768px){
+    nav { flex-direction:column; gap:25px; padding:20px; }
+    .hero { padding:200px 20px 140px; }
+    .typing-name { font-size:3.2rem !important; }
+    .typing-cursor { height: 62px !important; }
+    .profile-card { width:150px; height:150px; }
+    section { margin:60px 20px; padding:40px 25px; }
+    .project-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<!-- Background Layers -->
+<div class="grid"></div>
+<div class="stars" id="stars"></div>
+
+<nav>
+  <div class="logo">Kewin Benet M</div>
+  <div class="menu">
+    <a href="#about">About</a>
+    <a href="#education">Education</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#contact" class="cta">Contact Me</a>
+</nav>
+
+<div class="hero">
+  <div class="profile-container">
+    <div class="profile-card">
+      <img src="PHOTO.jpg" alt="Kewin Benet M" class="profile-pic">
+    </div>
+  </div>
+  <div class="typing-container">
+    <h1 class="typing-name" id="typing-text"></h1>
+    <span class="typing-cursor" id="cursor"></span>
+  </div>
+  <p>CS Student • IoT & Robotics Enthusiast • Builder</p>
+  <a href="#contact" class="hero-btn">Get in Touch</a>
+</div>
+
+<section id="about">
+  <h2>About Me</h2>
+  <p>Hi! I'm Kewin Benet M, a first-year CS student at PES University. I love working on IoT, embedded systems, autonomous robotics, and real-world software projects.</p>
+</section>
+
+<section id="education">
+  <h2>Education</h2>
+  <ul>
+    <li>B.Tech — Computer Science Engineering (Core), PES University, Bengaluru (2025 – Present)</li>
+    <li>ISC — Class XII, Computer Science (Java)</li>
+  </ul>
+</section>
+
+<section id="skills">
+  <h2>Skills</h2>
+  <ul>
+    <li>Programming: Java, Python, C</li>
+    <li>OOP & Data Structures</li>
+    <li>Hardware: ESP32, Neo-6M GPS, IMU</li>
+    <li>Tools: GitHub, VS Code, Arduino</li>
+  </ul>
+</section>
+
+<section id="projects">
+  <h2>Projects</h2>
+  <div class="project-grid">
+    <div class="project-card">
+      <h3>IoT GPS Rider State System</h3>
+      <p>Detects rider motion using ESP32 + Neo-6M GPS + IMU for real-time tracking.</p>
+      <a href="https://github.com/yourusername/gps-rider" class="github-btn" target="_blank">
+        View Code <span>📂</span>
+      </a>
+    </div>
+    <div class="project-card">
+      <h3>Autonomous Go-Kart Navigation</h3>
+      <p>Club project to navigate PES campus autonomously using sensor fusion.</p>
+      <a href="https://github.com/yourusername/go-kart" class="github-btn" target="_blank">
+        View Code <span>📂</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <h2>Contact</h2>
+  <p>📍 Bengaluru, India<br>📞 +91 8904187555<br>📧 <a href="mailto:kewinbenetm@gmail.com">kewinbenetm@gmail.com</a><br>LinkedIn: <a href="https://www.linkedin.com/in/kewin-benet-m" target="_blank">Kewin Benet M</a></p>
+</section>
+
+<footer>© 2025 • Portfolio of Kewin Benet M</footer>
+
+<script>
+// PERFECT Typing Effect with CENTERED Cursor
+function typeWriter() {
+  const text = "Kewin Benet M";
+  const typingElement = document.getElementById('typing-text');
+  const cursor = document.getElementById('cursor');
+  let i = 0;
+  
+  function type() {
+    if (i < text.length) {
+      typingElement.textContent += text.charAt(i);
+      i++;
+      setTimeout(type, 150);
+    } else {
+      setTimeout(() => {
+        typingElement.textContent = '';
+        i = 0;
+        type();
+      }, 3000);
+    }
+  }
+  
+  type();
+}
+
+// Create twinkling stars
+function createStars() {
+  const starsContainer = document.getElementById('stars');
+  for(let i = 0; i < 100; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.left = Math.random() * 100 + '%';
+    star.style.top = Math.random() * 100 + '%';
+    star.style.animationDelay = Math.random() * 3 + 's';
+    star.style.animationDuration = (Math.random() * 2 + 2) + 's';
+    starsContainer.appendChild(star);
+  }
+}
+
+// Initialize
+createStars();
+typeWriter();
+
+// Smooth scrolling
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    document.querySelector(this.getAttribute('href')).scrollIntoView({ 
+      behavior: 'smooth', block: 'start' 
+    });
+  });
+});
+</script>
+
+</body>
+</html>
